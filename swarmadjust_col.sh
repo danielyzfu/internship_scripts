@@ -2,9 +2,6 @@
 #----------------------------------------
 #6/23/2021, Daniel Fu, Initial Version
 #Inserts TER keyword after each chain in .pdb for SwarmDock job requests in [name]_sd.pdb (workhorse)
-
-#6/25/2021, Daniel Fu
-#Uses byte position instead of columns delimited by spaces
 #----------------------------------------
 
 inname=`echo $1 | sed 's/.pdb//'`
@@ -13,10 +10,7 @@ outpath="/Users/daniel/Downloads/unbound_clean_sd/"
 
 #Parse thru each line, when fifth item is chain and changes add "TER"
 
-awk 'BEGIN { getline; cmp=substr($0,22,1); print $0 } cmp!=substr($0,22,1) { print "TER\n" $0 } (substr($0,22,1) ~ /[[:space:]]/) && (cmp!=substr($0,22,1)) { print $0 } cmp==substr($0,22,1) { print $0 }  substr($0,22,1)==""{ print $0 } { cmp=substr($0,22,1); }' $1 > $outname
-
-#awk 'BEGIN { getline; cmp=$5; print $0 } ($5 ~ /[[:upper:]]/) && (cmp!=$5) { print "TER\n" $0 } ($5 ~ /[[:digit:]]/) && (cmp!=$5) { print $0 } cmp==$5 { print $0 }  $5==""{ print $0 } { cmp=$5; }' $1 > $outname
-
+awk 'BEGIN { getline; cmp=$5; print $0 } ($5 ~ /[[:upper:]]/) && (cmp!=$5) { print "TER\n" $0 } ($5 ~ /[[:digit:]]/) && (cmp!=$5) { print $0 } cmp==$5 { print $0 }  $5==""{ print $0 } { cmp=$5; }' $1 > $outname
 
 tailline=`tail -1 $outname`
 
