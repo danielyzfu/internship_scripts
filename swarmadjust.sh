@@ -15,9 +15,6 @@ outpath="/Users/daniel/Downloads/unbound_clean_sd/"
 
 awk 'BEGIN { getline; cmp=substr($0,22,1); print $0 } cmp!=substr($0,22,1) { print "TER\n" $0 } (substr($0,22,1) ~ /[[:space:]]/) && (cmp!=substr($0,22,1)) { print $0 } cmp==substr($0,22,1) { print $0 }  substr($0,22,1)==""{ print $0 } { cmp=substr($0,22,1); }' $1 > $outname
 
-#awk 'BEGIN { getline; cmp=$5; print $0 } ($5 ~ /[[:upper:]]/) && (cmp!=$5) { print "TER\n" $0 } ($5 ~ /[[:digit:]]/) && (cmp!=$5) { print $0 } cmp==$5 { print $0 }  $5==""{ print $0 } { cmp=$5; }' $1 > $outname
-
-
 tailline=`tail -1 $outname`
 
 #If has "END", add "TER" before it; otherwise add "TER" in last line
